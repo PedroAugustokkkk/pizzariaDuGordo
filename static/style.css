@@ -1,0 +1,258 @@
+:root {
+  --cabecalho: #058af7;
+  --cabecalho_sec: #00939C;
+  --titulo_card: #d47d20;
+  --p_card: #502000;
+  --fundo: #9C3E00;
+  --fundo-card: #ffffff;
+}
+
+/* Reset básico */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--fundo);
+  color: var(--fundo-card);
+  padding-bottom: 40px;
+}
+
+/* Header com gradiente */
+header {
+  background: linear-gradient(90deg, #058af7, #00939C);
+  color: white;
+  padding: 18px;
+  text-align: center;
+}
+
+/* Navegação */
+nav a { 
+  color: #fff; 
+  margin: 0 10px; 
+  text-decoration: none; 
+  font-weight: bold; 
+}
+
+main { padding: 20px; text-align: center; }
+
+/* Cardápio em grid */
+.grid-cardapio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* Card da pizza com gradiente suave de fundo */
+.pizza-card {
+  width: 260px;
+  background: linear-gradient(90deg, #ffffff);
+  border-radius: 12px;
+  border: 2px solid var(--cabecalho);
+  padding: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+}
+
+.pizza-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+}
+
+.pizza-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.pizza-card h3 { 
+  color: var(--titulo_card); 
+  margin-top: 8px; 
+}
+
+.pizza-card p { 
+  font-size: 0.95rem; 
+  margin-top: 6px; 
+  color: var(--p_card); 
+}
+
+/* Quando o card estiver selecionado */
+.pizza-card.selecionado {
+    border: 10px solid var(--cabecalho);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+
+/* Seção de Tamanhos */
+.secao-tamanho {
+    margin-bottom: 30px;
+}
+
+.grid-tamanhos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.opcao-tamanho {
+    width: 200px;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffffff, #f0f0f0);
+    border: 2px solid var(--cabecalho_sec);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.opcao-tamanho:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #f8f8f8, #e8e8e8);
+}
+
+.opcao-tamanho:focus {
+    outline: 3px solid var(--cabecalho);
+    outline-offset: 2px;
+}
+
+/* Quando o botão de tamanho estiver selecionado */
+.opcao-tamanho.selecionado {
+    border: 10px solid var(--cabecalho);
+    background: linear-gradient(135deg, #e8f4f8, #d4edda);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    transform: translateY(-2px);
+}
+
+.opcao-tamanho h3 {
+    color: var(--titulo_card);
+    margin-bottom: 10px;
+}
+
+.opcao-tamanho p {
+    margin: 5px 0;
+    color: var(--p_card);
+}
+
+.info-limite {
+    font-size: 0.9rem;
+    color: var(--cabecalho) !important;
+    font-weight: bold;
+    margin-top: 10px !important;
+}
+
+/* Botões com gradiente */
+.botao {
+  margin-top: 10px;
+  display: inline-block;
+  background: linear-gradient(90deg, #058af7, #00939C);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.botao:hover {
+  background: linear-gradient(90deg, #00939C, #058af7);
+}
+
+/* Banner da homepage com gradiente de overlay */
+.banner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.banner img {
+  width: 90%;
+  max-width: 900px;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.bemvindo {
+  margin-top: 10px;
+  text-align: center;
+  padding: 20px;
+}
+
+.bemvindo h2 {
+  color: var(--titulo_card);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: 'Arial Black', Gadget, sans-serif;
+}
+
+.bemvindo p {
+  font-size: 1rem;
+  color: var(--p_card);
+  margin-bottom: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Cursor de clique */
+.pizza-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+}
+
+.pizza-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 14px rgba(0,0,0,0.2);
+}
+
+/* Mensagens de erro e sucesso */
+.mensagem {
+    font-weight: bold;
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.limite-atingido {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.erro { 
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.sucesso { 
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Ajustes para a seção de sabores */
+#secao-sabores h2 {
+    color: var(--fundo-card);
+    margin-bottom: 15px;
+}
+
+#secao-sabores p {
+    color: var(--p_card);
+}

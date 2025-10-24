@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Cardápio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        let tamanhoSelecionado = '';
+        let saboresSelecionados = [];
+        const limites = {
+            'media': 1,
+            'grande': 2,
+            'familia': 4
+        };
+
+        function selecionarTamanho(tamanho) {
+            tamanhoSelecionado = tamanho;
+            saboresSelecionados = []; // Reset sabores ao mudar tamanho
+            
+            // Atualizar display
+            document.querySelectorAll('.opcao-tamanho').forEach(opcao => {
+                opcao.classList.remove('selecionado');
+            });
+            event.currentTarget.classList.add('selecionado');
+            
+            // Resetar checkboxes visuais
+            document.querySelectorAll('.pizza-card').forEach(card => {
+                card.classList.remove('selecionado');
+                card.querySelector('input[type="checkbox"]').checked = false;
+            });
+            
+            // Habilitar seleção de sabores
+            document.getElementById('secao-sabores').style.display = 'block';
+            atualizarMensagemLimite();
+        }
+
+        function toggleSelection(card) {
+            if (!tamanhoSelecionado) {
+                alert('Por favor, selecione primeiro o tamanho da pizza.');
+                return;
+            }
+            
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            const sabor = checkbox.value;
+            const limite = limites[tamanhoSelecionado];
+            
+            if (!checkbox.checked && saboresSelecionados.length < limite) {
+                // Adicionar sabor
+                checkbox.checked = true;
+                card.classList.add('selecionado');
+                saboresSelecionados.push(sabor);
+            } else if (checkbox.checked) {
+                // Remover sabor
+                checkbox.checked = false;
+                card.classList.remove('selecionado');
+                saboresSelecionados = saboresSelecionados.filter(s => s !== sabor);
+            } else {
+                alert(`Limite máximo de ${limite} sabor(es) atingido para este tamanho.`);
+            }
+            
+            atualizarMensagemLimite();
+        }
+
+        function atualizarMensagemLimite() {
+            const limite = limites[tamanhoSelecionado] || 0;
+            const mensagem = document.getElementById('mensagem-limite');
+            if (tamanhoSelecionado) {
+                mensagem.textContent = `Sabores selecionados: ${saboresSelecionados.length}/${limite}`;
+                mensagem.className = saboresSelecionados.length === limite ? 'mensagem limite-atingido' : 'mensagem';
+            }
+        }
+
+        function validarForm() {
+            if (!tamanhoSelecionado) {
+                alert('Por favor, selecione o tamanho da pizza.');
+                return false;
+            }
+            
+            if (saboresSelecionados.length === 0) {
+                alert('Por favor, selecione pelo menos um sabor.');
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Cardápio</h1>
+        <nav><a href="/">Início</a></nav>
+    </header>
+
+    <main>
+        <form action="/cardapio" method="POST" onsubmit="return validarForm()">
+
+                <!-- Seção de Tamanhos -->
+            <div class="secao-tamanho">
+                <h2>Qual tamanho de sua fome??</h2>
+                <div class="grid-tamanhos">
+                    <button type="button" class="opcao-tamanho" onclick="selecionarTamanho('media')">
+                        <h3>Média</h3>
+                        <p>6 pedaços</p>
+                        <p><strong>R$ 30,00</strong></p>
+                        <p class="info-limite">Até 1 sabor</p>
+                    </button>
+                    <button type="button" class="opcao-tamanho" onclick="selecionarTamanho('grande')">
+                        <h3>Grande</h3>
+                        <p>8 pedaços</p>
+                        <p><strong>R$ 45,00</strong></p>
+                        <p class="info-limite">Até 2 sabores</p>
+                    </button>
+                    <button type="button" class="opcao-tamanho" onclick="selecionarTamanho('familia')">
+                        <h3>Família</h3>
+                        <p>12 pedaços</p>
+                        <p><strong>R$ 50,00</strong></p>
+                        <p class="info-limite">Até 4 sabores</p>
+                    </button>
+                </div>
+                <input type="hidden" name="tamanho" id="input-tamanho">
+            </div>
+
+            <!-- Seção de Sabores (inicialmente oculta) -->
+            <div id="secao-sabores" style="display: none; margin-top: 30px;">
+                <h2>Quais sabores??</h2>
+                
+                <div class="grid-cardapio">
+                    {% for pizza in pizzas %}
+                    <div class="pizza-card" onclick="toggleSelection(this)">
+                        <img src="{{ url_for('static', filename='img/' + pizza.img_file) }}" alt="{{ pizza.nome }}">
+                        <h3>{{ pizza.nome }}</h3>
+                        <p>{{ pizza.descricao }}</p>
+                        <input type="checkbox" name="sabores" value="{{ pizza.nome }}" style="display:none;">
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <p id="mensagem-limite" class="mensagem"></p>
+            
+            </div>
+
+            <button type="submit" class="botao" style="margin-top: 20px;">Fazer Pedido</button>
+        </form>
+
+        {% if erro %}
+            <p class="mensagem erro">{{ erro }}</p>
+        {% endif %}
+        {% if sucesso %}
+            <p class="mensagem sucesso">{{ sucesso }}</p>
+        {% endif %}
+    </main>
+
+    <script>
+        // Atualizar o campo hidden do tamanho antes do envio
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('input-tamanho').value = tamanhoSelecionado;
+        });
+    </script>
+</body>
+</html>
