@@ -186,6 +186,7 @@ main { padding: 20px; text-align: center; }
   margin-top: 10px;
   text-align: center;
   padding: 20px;
+  
 }
 
 .bemvindo h2 {
@@ -201,9 +202,9 @@ main { padding: 20px; text-align: center; }
 
 .bemvindo p {
   font-size: 1rem;
-  color: var(--p_card);
+  color: white;
   margin-bottom: 20px;
-  font-weight: 500;
+  font-weight: bold;
   line-height: 1.6;
   max-width: 800px;
   margin-left: auto;
