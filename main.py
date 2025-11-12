@@ -13,7 +13,7 @@ def create_app():
         code = getattr(e, "code", 404)
         mensagem = getattr(e, "description", str(e))
 
-        return render_template("erro.html", codigo = code, mensagem=mensagem)
+        return render_template("erro.html", codigo=code, mensagem=mensagem)
 
 
     return app
