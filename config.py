@@ -1,8 +1,10 @@
-import os
+import os 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath (os.path.dirname(__file__))
 
-
+# URI = Identificador Uniforme de Recurso
+# URL = Localizador Uniforme de Recurso 
+# Toda URL é um URI
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY") or "#TONOHUB"
